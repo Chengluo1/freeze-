@@ -1,2 +1,2 @@
-# freeze-
-基于SSH的摄影师约拍平台
+# Freeze
+Website for booking photographers to take photos

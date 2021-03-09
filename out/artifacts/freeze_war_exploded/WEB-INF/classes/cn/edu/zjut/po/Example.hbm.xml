@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Example" table="example" schema="freeze">
+		<id name="exampleId" type="int">
+			<column name="exampleID" />
+			<generator class="increment" />
+		</id>
+		<property name="photographerId" type="string">
+			<column name="photographerID" length="10"/>
+		</property>
+		<property name="name" type="string">
+			<column name="name" length="20" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="100" />
+		</property>
+		<property name="style" type="string">
+			<column name="style" length="20" />
+		</property>
+		<property name="praise" type="java.lang.Integer">
+			<column name="praise" />
+		</property>
+		<property name="time" type="java.sql.Timestamp">
+			<column name="time" />
+		</property>
+		<property name="area" type="string"> 
+			<column name="area" length="10" />
+		</property>
+		<property name="visits" type="java.lang.Integer"> 
+			<column name="visits"/>
+		</property>
+<!--		用来判断案例是否推优-->
+		<property name="status" type="java.lang.Integer">
+			<column name="status"/>
+		</property>
+
+<!--		&lt;!&ndash; 与photographer的多对一关联（双向）&ndash;&gt;-->
+<!--		<many-to-one name="photographer" class="cn.edu.zjut.po.Photographer" lazy="false">-->
+<!--			<column name="photographerID" />-->
+<!--		</many-to-one>-->
+
+		<!-- 与examplePanorama的一对多关联（双向） -->
+		<set name="panoramas" cascade="delete" lazy="false">
+			<key column="exampleID" />
+			<one-to-many class="cn.edu.zjut.po.ExamplePanorama" />
+		</set>
+		<!-- 与examplePicture的一对多关联（双向） -->
+		<set name="pictures" cascade="delete" lazy="false">
+			<key column="exampleID" />
+			<one-to-many class="cn.edu.zjut.po.ExamplePicture" />
+		</set>
+		<!-- 与comments的一对多关联（单向） -->
+		<set name="comments" cascade="all" lazy="false">
+			<key column="exampleID" />
+			<one-to-many class="cn.edu.zjut.po.Comments" />
+		</set>
+		
+		<!-- 与收藏者的多对多关联-->
+		<set name="em_collecters" table="star" lazy="false">
+			<key column="exampleID" />
+			<many-to-many column="collecter" class="cn.edu.zjut.po.Employer"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Subscribe" table="subscribe" schema="freeze">
+		<id name="subscribeID" type="int">
+			<column name="subscribeID" />
+			<generator class="increment" />
+		</id>
+		<property name="title" type="string">
+			<column name="title" length="20" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="500" />
+		</property>
+	    <property name="time" type="java.sql.Timestamp">
+			<column name="time" />
+		</property>
+		<property name="money" type="java.lang.Float">
+			<column name="money" />
+		</property>
+		<property name="status" type="int">
+			<column name="status" />
+		</property>
+		<!-- 与employer的多对一关联 -->
+		<many-to-one name="subscriber" class="cn.edu.zjut.po.Employer" fetch="select" lazy="false">
+			<column name="subscriber" />
+		</many-to-one>
+		<!-- 与Photographer的多对一关联 -->
+		<many-to-one name="scriber" class="cn.edu.zjut.po.Photographer" fetch="select" lazy="false">
+			<column name="scriber" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

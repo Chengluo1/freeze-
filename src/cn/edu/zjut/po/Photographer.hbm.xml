@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Photographer" table="photographer" schema="freeze">
+		<id name="photographerId" type="string">
+			<column name="photographerID" length="10" />
+			<generator class="assigned" />
+		</id>
+		<property name="account" type="string">
+			<column name="account" length="20" unique="true" />
+		</property>
+		<property name="name" type="string">
+			<column name="name" length="20" />
+		</property>
+		<property name="password" type="string">
+			<column name="password" length="20" />
+		</property>
+		<property name="IDNumber" type="string">
+			<column name="IDNumber" length="18" />
+		</property>
+		<property name="phone" type="string">
+			<column name="phone" length="20" />
+		</property>
+		<property name="email" type="string">
+			<column name="email" length="100" />
+		</property>
+		<property name="sex" type="java.lang.Boolean">
+			<column name="sex" />
+		</property>
+		<property name="region" type="string">
+			<column name="region" length="20" />
+		</property>
+		<property name="wechat" type="string">
+			<column name="wechat" length="20" />
+		</property>
+		<property name="qq" type="string">
+			<column name="qq" length="20" />
+		</property>
+		<property name="score" type="java.lang.Integer">
+			<column name="score" />
+		</property>
+		<property name="profilePhoto" type="string">
+			<column name="profilePhoto" length="255" />
+		</property>
+		<property name="introduction" type="string">
+			<column name="introduction" length="500" />
+		</property>
+		<property name="fans" type="java.lang.Integer">
+			<column name="fans" />
+		</property>
+		<property name="praise" type="java.lang.Integer">
+			<column name="praise" />
+		</property>
+		<property name="status" type="string">
+			<column name="status" length="45" />
+		</property>
+		<property name="prize" type="string">
+			<column name="prize" length="200"/>
+		</property>
+		<property name="certificate" type="string">
+			<column name="certificate" length="100" />
+		</property>
+		<property name="message" type="string">
+			<column name="message" length="500" />
+		</property>
+		<property name="status1" type="java.lang.Integer">
+			<column name="status1"/>
+		</property>
+		<property name="money1" type="java.lang.Integer">
+			<column name="money1" />
+		</property>
+		<property name="visits" type="java.lang.Integer">
+			<column name="visits"/>
+		</property>
+		<property name="title" type="string">
+			<column name="title" length="10"/>
+		</property>
+		
+		<!-- 与拥有的example的一对多关联 -->
+		<set name="examples_own" cascade="all" lazy="false">
+			<key column="photographerID" />
+			<one-to-many class="cn.edu.zjut.po.Example" />
+		</set>
+		<!-- 与收藏的example的多对多关联（单向） -->
+		<set name="examples_star" table="star" lazy="false">
+			<key column="collecter" />
+			<many-to-many column="exampleID" class="cn.edu.zjut.po.Example"/>
+		</set>
+		<!-- 与关注的photographer的多对多关联（单向） -->
+		<set name="photographer_follow" table="follow">
+			<key column="follower" />
+			<many-to-many column="photographerID" class="cn.edu.zjut.po.Photographer"/>
+		</set>
+		<!-- 与subscribe的一对多关联 -->
+		<set name="subscribe" inverse="true" lazy="false">
+			<key column="scriber" />
+			<one-to-many class="cn.edu.zjut.po.Subscribe" />
+		</set>
+		<!-- 与报名的needs的多对多关联（双向） -->
+		<set name="needs" table="signup" lazy="false">
+			<key column="photographerID" />
+			<many-to-many column="needsID" class="cn.edu.zjut.po.Needs"/>
+		</set>
+		<!-- 与order的一对多关联-->
+		<set name="orderrs" inverse="true" lazy="false">
+            <key column="photographerID" />
+            <one-to-many class="cn.edu.zjut.po.Orderr" />
+        </set>
+	</class>
+</hibernate-mapping>

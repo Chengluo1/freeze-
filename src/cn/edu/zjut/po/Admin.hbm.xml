@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Admin" table="admin" schema="freeze">
+		<id name="adminId" type="string">
+			<column name="adminID" length="10"/>
+			<generator class="assigned" />
+		</id>
+		<property name="name" type="string">
+			<column name="name" length="10" />
+		</property>
+		<property name="password" type="string">
+			<column name="password" length="20" />
+		</property>
+		<property name="phone" type="string">
+			<column name="phone" length="11" />
+		</property>
+		<property name="profilePhoto" type="string">
+		      <column name="profilePhoto" length="60"/>
+		</property>
+	</class>
+</hibernate-mapping>

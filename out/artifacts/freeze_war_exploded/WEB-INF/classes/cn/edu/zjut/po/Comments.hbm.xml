@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Comments" table="comments" schema="freeze">
+		<id name="commentsId" type="int">
+			<column name="commentsID" />
+			<generator class="increment" />
+		</id>
+		<property name="content" type="string">
+			<column name="content" length="100" />
+		</property>
+		<property name="time" type="java.sql.Timestamp">
+			<column name="time" />
+		</property>
+		<property name="reviewer" type="string">
+			<column name="reviewer" length="10" />
+		</property>
+		<property name="status" type="int">
+			<column name="status"/>
+		</property>
+		<!-- 与example的多对一关联 -->
+		<many-to-one name="example" class="cn.edu.zjut.po.Example" cascade="all" lazy="false">
+			<column name="exampleID" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

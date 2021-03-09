@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Orderr" table="orderr" schema="freeze">
+		<id name="orderrId" type="string">
+			<column name="orderrID" length="40" />
+			<generator class="assigned" />
+		</id>
+		<property name="title" type="string">
+			<column name="title" length="100" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="500" />
+		</property>
+		<property name="beginTime" type="java.util.Date">
+			<column name="beginTime" />
+		</property>
+		<property name="finishTime" type="java.util.Date">
+			<column name="finishTime" />
+		</property>
+		<property name="money" type="java.lang.Float">
+			<column name="money" />
+		</property>
+		<property name="state" type="string">
+			<column name="state" length="5" />
+		</property>
+		
+		<many-to-one name="employer" class="cn.edu.zjut.po.Employer" column="employerID" fetch="select" lazy="false">
+        </many-to-one>
+        <many-to-one name="photographer" class="cn.edu.zjut.po.Photographer" column="photographerID" fetch="select" lazy="false">
+        </many-to-one>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+        "-//Apache Struts//XWork Validator 1.0.3//EN"
+        "http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+    <field name="repassword">
+        <field-validator type="fieldexpression">
+            <param name="expression"><![CDATA[repassword.equal(employer.password))]]></param>
+            <message>两次输入的密码不一致！</message>
+        </field-validator>
+    </field>
+    <field name="employer.phone">
+        <field-validator type="requiredstring">
+            <param name="trim">true</param>
+            <message>手机号不能为空！</message>
+        </field-validator>
+    </field>
+</validators>

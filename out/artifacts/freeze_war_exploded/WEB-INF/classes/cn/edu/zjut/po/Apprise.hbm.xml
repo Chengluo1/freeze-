@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Apprise" table="apprise" schema="freeze">
+		<id name="appriseId" type="int">
+			<column name="appriseID" />
+			<generator class="increment" />
+		</id>
+		<property name="content" type="string">
+			<column name="content" length="500" />
+		</property>
+		<property name="score" type="int">
+			<column name="score" />
+		</property>
+		
+		<!-- 与photographer的多对一关联（双向） -->
+		<many-to-one name="photographer" class="cn.edu.zjut.po.Photographer"
+			cascade="all" lazy="false">
+			<column name="photographerID" />
+		</many-to-one>
+		<!-- 与employer的多对一关联（双向） -->
+		<many-to-one name="employer" class="cn.edu.zjut.po.Employer"
+			cascade="all" lazy="false">
+			<column name="employerID" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>
+
+		

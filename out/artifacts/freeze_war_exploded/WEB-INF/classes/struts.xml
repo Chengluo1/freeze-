@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+
+    <constant name="struts.action.excludePattern" value="/css/.*?" />
+    <constant name="struts.ui.theme" value="simple" />
+    <constant name="struts.ui.templateDir" value="template" />
+    <constant name="struts.ui.templateSuffix" value="ftl" />
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.multipart.maxSize" value="209715200" />
+    <constant name="struts.multipart.saveDir" value="/tmp" />
+
+    <package name="strutsBean" extends="struts-default" namespace="/">
+        <interceptors>
+            <interceptor name="loginInterceptor" class="cn.edu.zjut.intercepter.LoginIntercepter" />
+            <interceptor name="authorityInterceptor" class="cn.edu.zjut.intercepter.AuthorityInterceptor"/>
+        </interceptors>
+        <action name="login" class="photographerAction" method="login">
+            <result name="loginSuccess">/index.jsp</result>
+            <result name="loginFail">/login.jsp</result>
+            <result name="input">/login.jsp</result>
+        </action>
+        <action name="registerEmp" class="employerAction" method="register">
+            <result name="success">/login.jsp</result>
+            <result name="fail">/registerEmp.jsp</result>
+        </action>
+        <action name="registerPho" class="photographerAction" method="register">
+            <result name="success">/login.jsp</result>
+            <result name="failed">/registerPho.jsp</result>
+        </action>
+        <action name="searchByAccount" class="photographerAction" method="searchByAccount">
+            <result name="accountSuccess">/selectPhotographer.jsp</result>
+            <result name="accountFail">/selectPhotographer.jsp</result>
+        </action>
+        <action name="findAll" class="photographerAction" method="findAll">
+            <result name="success">/selectPhotographer.jsp</result>
+            <result name="fail">/login.jsp</result>
+        </action>
+        <action name="findByPraise" class="photographerAction" method="findByPraise">
+            <result name="praiseSuccess">/selectPhotographer.jsp</result>
+            <result name="praiseFail">/login.jsp</result>
+        </action>
+        <action name="findByScore" class="photographerAction" method="findByScore">
+            <result name="scoreSuccess">/selectPhotographer.jsp</result>
+            <result name="scoreFail">/login.jsp</result>
+        </action>
+        <action name="findByYou" class="photographerAction" method="findByYou">
+            <result name="youSuccess">/selectPhotographer.jsp</result>
+            <result name="youFail">/login.jsp</result>
+        </action>
+        <action name="putPhotographer" class="photographerAction" method="putPhotographer">
+            <result name="others">/phpOthers.jsp</result>
+            <result name="myself">/php.jsp</result>
+        </action>
+        <action name="findneeds" class="needsAction" method="findneeds">
+            <result name="findneedssuccess">/needList.jsp</result>
+            <result name="login">/login.jsp</result>
+        </action>
+        <action name="needsByID" class="needsAction" method="getNeedsByID">
+            <result name="success">/needsDetail.jsp</result>
+        </action>
+        <action name="SignUp" class="needsAction" method="SignUp">
+            <result name="success">/needsDetail.jsp</result>
+        </action>
+        <action name="cancelSignUp" class="needsAction" method="cancelSignUp">
+            <result name="success">/needsDetail.jsp</result>
+        </action>
+        <action name="judge" class="photographerAction" method="judgeIdentity">
+            <result name="photographer">/php.jsp</result>
+            <result name="employer">/employerPhp.jsp</result>
+        </action>
+        <action name="update" class="photographerAction" method="update">
+            <result name="success" >/Ppersonal.jsp</result>
+            <result name="fail" >/Ppersonal.jsp</result>
+        </action>
+        <action name="update2" class="photographerAction" method="update2">
+            <result name="success" >/Pcertificate.jsp</result>
+            <result name="fail" >/Pcertificate.jsp</result>
+        </action>
+        <!--        注销账号-->
+        <action name="logout1" class="adminAction" method="logout1">
+            <result name="success">/logoutAccount.jsp</result>
+            <result name="failed">/logoutAccount.jsp</result>
+        </action>
+        <!--        未认证摄影师-->
+        <action name="show2" class="adminAction" method="display1">
+            <result name="success">authentication.jsp</result>
+        </action>
+        <!--        已认证摄影师-->
+        <action name="show3" class="adminAction" method="display2">
+            <result name="success">authentication1.jsp</result>
+        </action>
+        <action name="view" class="adminAction" method="view">
+            <result name="success">authendetail.jsp</result>
+        </action>
+        <!--        详情页认证摄影师-->
+        <action name="authen" class="adminAction" method="Authen">
+            <result name="success">authendetail.jsp</result>
+            <result name="failes">authendetail.jsp</result>
+        </action>
+<!--        管理员摄影师推优-->
+        <action name="show" class="adminAction" method="display">
+            <result name="success">manager.jsp</result>
+        </action>
+<!--        管理员案例推优-->
+        <action name="show1" class="adminAction" method="display">
+            <result name="success">manager1.jsp</result>
+        </action>
+        <!--        管理员、摄影师推优、摄影师详情页-->
+        <action name="view1" class="adminAction" method="view">
+            <result name="success">php.jsp</result>
+        </action>
+        <action name="recommendE" class="adminAction" method="recommendE">
+            <result name="success">manager1.jsp</result>
+            <result name="failed">manager1.jsp</result>
+        </action>
+        <action name="recommendP" class="adminAction" method="recommendP">
+            <result name="success">manager.jsp</result>
+            <result name="failed">manager.jsp</result>
+        </action>
+        <action name="recommend1" class="photographerAction" method="recommend1">
+            <result name="success" >/recommend.jsp</result>
+            <result name="fail" >/recommend.jsp</result>
+        </action>
+        <action name="recommend3" class="exampleAction" method="recommend3">
+            <result name="success" >/Erecommend.jsp</result>
+            <result name="fail" >/Erecommend.jsp</result>
+        </action>
+        <action name="putSubscribe" class="subscribeAction" method="putSubscribe">
+            <result name="success">/subscribeDetail.jsp</result>
+        </action>
+        <action name="cancelSub" class="subscribeAction" method="cancelSub">
+            <result name="success">/employerIndex.jsp</result>
+        </action>
+        <action name="gotoGenerateOrder" class="subscribeAction" method="gotoGenerateOrder">
+            <result name="success">/subscribeToOrderr.jsp</result>
+        </action>
+        <action name="uploadCase" class="photographerAction" method="upload">
+            <result name="uploadSucccess">/uploadCaseResult.jsp</result>
+            <result name="uploadFail">/uploadCase.jsp</result>
+            <result name="input">/uploadCase.jsp</result>
+        </action>
+        <action name="orderrByID" class="orderrAction" method="getOrderrByID">
+            <result name="success">/orderDetail.jsp</result>
+        </action>
+        <action name="finish" class="orderrAction" method="finish">
+            <result name="success">/orderDetail.jsp</result>
+        </action>
+        <action name="refund" class="orderrAction" method="refund">
+            <result name="success">/orderDetail.jsp</result>
+        </action>
+
+        <action name="getApprise" class="appriseAction" method="getApprises">
+            <result name="success">/getApprise.jsp</result>
+        </action>
+        <action name="removeExample" class="photographerAction" method="removeCase">
+            <result name="success">/php.jsp</result>
+        </action>
+        <action name="logout" class="photographerAction" method="logout">
+            <result name="success">/login.jsp</result>
+        </action>
+
+        <!-- 用户个人中心页面 显示用户资料-->
+        <action name="putEmployer" class="employerAction" method="putEmployer">
+            <result name="others">/employerPhpOthers.jsp</result>
+            <result name="myself">/employerPhp.jsp</result>
+        </action>
+        <!-- 用户个人中心页面 修改用户资料-->
+        <action name="update3" class="cn.edu.zjut.action.EmployerAction" method="update3">
+            <result name="success" >/Ppersonal.jsp</result>
+            <result name="fail" >/Ppersonal.jsp</result>
+        </action>
+        <action name="back" class="cn.edu.zjut.action.EmployerAction" method="back">
+            <result name="success">/employerIndex.jsp</result>
+        </action>
+        <action name="app" class="cn.edu.zjut.action.OrderrAction" method="app">
+            <result name="success">/apprise.jsp</result>
+        </action>
+        <action name="SubmitOrderr" class="cn.edu.zjut.action.OrderrAction" method="SubmitOrderr" >
+            <result name="success" >/orderDetail.jsp</result>
+            <result name="false">/wrong.jsp </result>
+        </action>
+        <action name="pay" class="cn.edu.zjut.action.OrderrAction" method="pay">
+            <result name="success">/orderDetail.jsp</result>
+        </action>
+        <action name="changeOrderrSt" class="cn.edu.zjut.action.OrderrAction" method="changeOrderrSt" >
+            <result name="success">/orderDetail.jsp</result>
+        </action>
+
+        <action name="apprise" class="appriseAction" method="apprise">
+            <result name="success">/employerIndex.jsp</result>
+            <result name="fail">/php.jsp</result>
+        </action>
+
+<!--看案例页面-->
+        <!--查看所有案例-->
+        <action name="findAllExample" class="exampleAction" method="findAllExample">
+            <result name="success">/projects.jsp</result>
+            <result name="login">/login.jsp</result>
+            <interceptor-ref name="authorityInterceptor"/>
+        </action>
+        <!--搜索框搜索案例-->
+        <action name="searchInFramedes" class="exampleAction" method="searchInFramedes">
+            <result name="success">/projects.jsp</result>
+            <result name="fail">/projects.jsp</result>
+        </action>
+<!--        <action name="searchInFrame" class="exampleAction" method="searchInFrame">-->
+<!--            <result name="success">/projects.jsp</result>-->
+<!--            <result name="fail">/projects.jsp</result>-->
+<!--        </action>-->
+        <!-- 通过筛选框中的元素查找案例-->
+        <action name="searchInList" class="exampleAction" method="searchInList">
+            <result name="success">/resultList.jsp</result>
+            <result name="fail">/resultList.jsp</result>
+        </action>
+        <!-- 为你推荐-->
+        <action name="recommendyou" class="exampleAction" method="recommendyou">
+            <result name="success">/projects.jsp</result>
+        </action>
+        <!--看案例页面 清除标准 -->
+        <action name="eliminate" class="exampleAction" method="eliminate">
+            <result name="success">/projects.jsp</result>
+        </action>
+        <!-- 案例详情-->
+        <action name="putExample" class="exampleAction" method="putExample">
+            <result name="success">/exampleDetails.jsp</result>
+        </action>
+
+        <!-- 评论-->
+        <action name="Review" class="exampleAction" method="review">
+            <result name="viewSuccess">/exampleDetails.jsp</result>
+            <result name="viewFail">/exampleDetails.jsp</result>
+        </action>
+        <action name="praise" class="exampleAction" method="praise">
+        </action>
+        <action name="star" class="exampleAction" method="star">
+        </action>
+        <action name="unstar" class="exampleAction" method="unstar">
+        </action>
+        <action name="unstarInList" class="exampleAction" method="unstarInList">
+            <result name="success">/starExamples.jsp</result>
+        </action>
+        <!--取消需求 -->
+<!--        <action name="cancelNeeds" class="needsAction" method="cancelNeeds">-->
+<!--            <result name="success">/needsDetail.jsp</result>-->
+<!--        </action>-->
+        <action name="SelectPho" class="needsAction" method="SelectPho">
+            <result name="success">/NeedsToOrderr.jsp</result>
+            <result name="false">/wrong.jsp </result>
+        </action>
+        <!-- 发布需求 -->
+        <action name="order" class="needsAction" method="order">
+            <result name="success">/needs.jsp</result>
+            <result name="fail">/needs.jsp</result>
+        </action>
+
+
+        <!-- 发布预约-->
+        <action name="subscribe" class="subscribeAction" method="subscribe">
+            <result name="success">/index.jsp</result>
+            <result name="fail">/phpOthers.jsp</result>
+        </action>
+        <action name="gotoSubscribe" class="photographerAction" method="gotoSubscribe">
+            <result name="success">/subscribe.jsp</result>
+        </action>
+        <action name="accept" class="subscribeAction" method="accept">
+            <result name="success">/php.jsp</result>
+        </action>
+        <action name="reject" class="subscribeAction" method="reject">
+            <result name="success">/designerIndex.jsp</result>
+        </action>
+        <!--        删除案例评论-->
+        <action name="deleteComments" class="exampleAction" method="deleteComments">
+            <result name="success">/showComments.jsp</result>
+        </action>
+        <!--        注销账号-->
+        <action name="showPho" class="photographerAction" method="showPho">
+            <result name="success">/logoutAccount.jsp</result>
+        </action>
+        <action name="showEmp" class="employerAction" method="showEmp">
+            <result name="success">/logoutAccount.jsp</result>
+        </action>
+        <action name="showComments" class="exampleAction" method="showComments">
+            <result name="success">/showComments.jsp</result>
+            <result name="failede">/manager1.jsp</result>
+        </action>
+        <action name="allowComments" class="exampleAction" method="allowComments">
+            <result name="success">/showComments.jsp</result>
+            <result name="failede">/manager1.jsp</result>
+        </action>
+    </package>
+</struts>

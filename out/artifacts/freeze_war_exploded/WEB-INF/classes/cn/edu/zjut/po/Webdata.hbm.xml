@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Webdata" table="webdata" schema="freeze">
+		<id name="dataid" type="int">
+			<column name="dataid" />
+			<generator class="increment" />
+		</id>
+		<property name="visit" type="int">
+			<column name="visit"/>
+		</property>
+		<property name="examplenum" type="int">
+			<column name="examplenum"/>
+		</property>
+		<property name="photographernum" type="int">
+			<column name="photographernum"/>
+		</property>
+		<property name="employernum" type="int">
+			<column name="employernum"/>
+		</property>
+		<property name="ordernum" type="int">
+			<column name="ordernum"/>
+		</property>
+		<property name="date" type="java.sql.Timestamp">
+			<column name="date" />
+		</property>
+	</class>
+</hibernate-mapping>
+

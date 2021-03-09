@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.ExamplePicture" table="examplePicture" schema="freeze">
+
+		<id name="picture1" type="string">
+			<column name="picture" length="255" />
+			<generator class="assigned" />
+		</id>
+
+		<!-- 与example的多对一关联 -->
+		<many-to-one name="example" class="cn.edu.zjut.po.Example" cascade="merge" lazy="false">
+			<column name="exampleID" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

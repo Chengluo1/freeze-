@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                        http://www.springframework.org/schema/aop
+                        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+                        http://www.springframework.org/schema/tx
+                        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                        http://www.springframework.org/schema/task
+                        http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+    <!-- 数据源配置 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/freeze112?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=UTF8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="clf65515786"/>
+    </bean>
+    <!-- sessionFactory配置 -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</prop>
+            </props>
+        </property>
+        <property name="mappingResources"><!-- 映射文件配置 -->
+            <list>
+                <value>cn/edu/zjut/po/Comments.hbm.xml</value>
+                <value>cn/edu/zjut/po/Photographer.hbm.xml</value>
+                <value>cn/edu/zjut/po/Employer.hbm.xml</value>
+                <value>cn/edu/zjut/po/Example.hbm.xml</value>
+                <value>cn/edu/zjut/po/ExamplePanorama.hbm.xml</value>
+                <value>cn/edu/zjut/po/ExamplePicture.hbm.xml</value>
+                <value>cn/edu/zjut/po/Needs.hbm.xml</value>
+                <value>cn/edu/zjut/po/Subscribe.hbm.xml</value>
+                <value>cn/edu/zjut/po/Orderr.hbm.xml</value>
+                <value>cn/edu/zjut/po/Admin.hbm.xml</value>
+                <value>cn/edu/zjut/po/Webdata.hbm.xml</value>
+                <value>cn/edu/zjut/po/Apprise.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置事务管理器 -->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
+
+    <!-- 定义增强处理拦截方法 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="find*" propagation="REQUIRED" />
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 定义事务拦截切面 -->
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="allServiceMethod" expression="execution(* cn.edu.zjut.dao.*.*(..))" />
+        <aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />
+    </aop:config>
+    <!-- 定义使用注解自动扫描的包 -->
+    <context:component-scan base-package="cn.edu.zjut.tool" />
+    <!-- 定时任务 -->
+    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
+    <task:scheduler  id="qbScheduler" pool-size="5"/>
+
+    <bean id="baseDAO" class="cn.edu.zjut.dao.BaseHibernateDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="photographerDAO" class="cn.edu.zjut.dao.PhotographerDAO" parent="baseDAO" />
+    <bean id="commentsDAO" class="cn.edu.zjut.dao.CommentsDAO" parent="baseDAO" />
+    <bean id="adminDAO" class="cn.edu.zjut.dao.AdminDAO" parent="baseDAO"/>
+    <bean id="employerDAO" class="cn.edu.zjut.dao.EmployerDAO" parent="baseDAO"/>
+    <bean id="webdataDAO" class="cn.edu.zjut.dao.WebdataDAO" parent="baseDAO"/>
+    <bean id="exampleDAO" class="cn.edu.zjut.dao.ExampleDAO" parent="baseDAO"/>
+    <bean id="examplePanoramaDAO" class="cn.edu.zjut.dao.ExamplePanoramaDAO" parent="baseDAO"/>
+    <bean id="examplePictureDAO" class="cn.edu.zjut.dao.ExamplePictureDAO" parent="baseDAO"/>
+    <bean id="orderrDAO" class="cn.edu.zjut.dao.OrderrDAO" parent="baseDAO"/>
+    <bean id="appriseDAO" class="cn.edu.zjut.dao.AppriseDAO" parent="baseDAO"/>
+    <bean id="needsDAO" class="cn.edu.zjut.dao.NeedsDAO" parent="baseDAO"/>
+    <bean id="subscribeDAO" class="cn.edu.zjut.dao.SubscribeDAO" parent="baseDAO"/>
+
+    <bean id="photographerService" class="cn.edu.zjut.service.PhotographerService">
+        <property name="adminDAO" ref="adminDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+        <property name="photographerDAO" ref="photographerDAO"/>
+        <property name="examplePanoramaDAO" ref="examplePanoramaDAO"/>
+        <property name="examplePictureDAO" ref="examplePictureDAO"/>
+        <property name="exampleDAO" ref="exampleDAO"/>
+    </bean>
+    <bean id="photographerAction" class="cn.edu.zjut.action.PhotographerAction" scope="prototype">
+        <property name="photographerServ" ref="photographerService"/>
+    </bean>
+
+    <bean id="employerService" class="cn.edu.zjut.service.EmployerService">
+        <property name="employerDAO" ref="employerDAO"/>
+    </bean>
+    <bean id="employerAction" class="cn.edu.zjut.action.EmployerAction" scope="prototype">
+        <property name="employerServ" ref="employerService"/>
+    </bean>
+
+    <bean id="adminService" class="cn.edu.zjut.service.AdminService">
+        <property name="adminDAO" ref="adminDAO"/>
+        <property name="exampleDAO" ref="exampleDAO"/>
+        <property name="photographerDAO" ref="photographerDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+    </bean>
+
+    <bean id="adminAction" class="cn.edu.zjut.action.AdminAction" scope="prototype">
+        <property name="adminService" ref="adminService"/>
+    </bean>
+
+
+    <bean id="needsService" class="cn.edu.zjut.service.NeedsService">
+        <property name="needsDAO" ref="needsDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+        <property name="photographerDAO" ref="photographerDAO"/>
+    </bean>
+    <bean id="needsAction" class="cn.edu.zjut.action.NeedsAction" scope="prototype">
+        <property name="needsServ" ref="needsService"/>
+    </bean>
+    <bean id="exampleService" class="cn.edu.zjut.service.ExampleService">
+        <property name="exampleDAO" ref="exampleDAO"/>
+        <property name="examplePanoramaDAO" ref="examplePanoramaDAO"/>
+        <property name="photographerDAO" ref="photographerDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+        <property name="commentsDAO" ref="commentsDAO"/>
+    </bean>
+    <bean id="exampleAction" class="cn.edu.zjut.action.ExampleAction" scope="prototype">
+        <property name="exampleServ" ref="exampleService"/>
+    </bean>
+
+    <bean id="subscribeService" class="cn.edu.zjut.service.SubscribeService">
+        <property name="subscribeDAO" ref="subscribeDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+        <property name="photographerDAO" ref="photographerDAO"/>
+    </bean>
+    <bean id="subscribeAction" class="cn.edu.zjut.action.SubscribeAction" scope="prototype">
+        <property name="subscribeServ" ref="subscribeService"/>
+    </bean>
+
+    <bean id="orderrService" class="cn.edu.zjut.service.OrderrService">
+        <property name="orderrDAO" ref="orderrDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+        <property name="photographerDAO" ref="photographerDAO"/>
+        <property name="subscribeDAO" ref="subscribeDAO"/>
+    </bean>
+    <bean id="orderrAction" class="cn.edu.zjut.action.OrderrAction" scope="prototype">
+        <property name="orderrServ" ref="orderrService"/>
+    </bean>
+
+    <bean id="appriseService" class="cn.edu.zjut.service.AppriseService">
+        <property name="photographerDAO" ref="photographerDAO"/>
+        <property name="employerDAO" ref="employerDAO"/>
+        <property name="appriseDAO" ref="appriseDAO"/>
+    </bean>
+    <bean id="appriseAction" class="cn.edu.zjut.action.AppriseAction" scope="prototype">
+        <property name="appriseServ" ref="appriseService"/>
+    </bean>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+</beans>

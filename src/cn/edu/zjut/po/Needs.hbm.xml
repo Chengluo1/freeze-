@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Needs" table="needs" schema="freeze">
+		<id name="needsId" type="int">
+			<column name="needsID" />
+			<generator class="increment" />
+		</id>
+		<property name="title" type="string">
+			<column name="title" length="20" />
+		</property>
+		<property name="description" type="string">
+			<column name="description" length="500" />
+		</property>
+		<property name="style" type="string">
+			<column name="style" length="20" />
+		</property>
+		<property name="time1" type="java.sql.Timestamp">
+			<column name="time1" />
+		</property>
+		<property name="time2" type="java.util.Date">
+			<column name="time2" />
+		</property>
+	    <property name="time3" type="java.util.Date">
+			<column name="time3" />
+		</property>
+		<property name="money" type="java.lang.Float">
+			<column name="money" />
+		</property>
+		<property name="enrollment" type="java.lang.Integer">
+			<column name="enrollment" />
+		</property>
+		<property name="city" type="string">
+			<column name="city" length="20"/>
+		</property>
+		<property name="area" type="java.lang.Integer">
+			<column name="area"/>
+		</property>
+		
+		<!-- 与employer的多对一关联 -->
+		<many-to-one name="employer" class="cn.edu.zjut.po.Employer" cascade="all" lazy="false">
+			<column name="employerID" />
+		</many-to-one>
+		<!-- 与报名的photographer的多对多关联（双向） -->
+		<set name="photographers" table="signup" lazy="false">
+			<key column="needsID" />
+			<many-to-many column="photographerID" class="cn.edu.zjut.po.Photographer"/>
+		</set>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+  		"-//Apache Struts//XWork Validator 1.0.3//EN"
+  		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+<validators>
+	<field name="example.name">
+		<field-validator type="requiredstring">
+			<param name="trim">true</param>
+			<message>案例名称不能为空！</message>
+		</field-validator>
+		<field-validator type="stringlength">
+			<param name="trim">true</param>
+			<param name="minLength">1</param>
+	        <param name="maxLength">20</param>
+			<message>案例名称长度不能超过20字！</message>
+		</field-validator>
+	</field>
+	
+	<field name="example.description">
+		<field-validator type="stringlength">
+			<param name="trim">true</param>
+			<param name="minLength">0</param>
+	        <param name="maxLength">100</param>
+			<message>案例描述不能超过100字！</message>
+		</field-validator>
+	</field>
+	
+	<field name="example.style">
+		<field-validator type="stringlength">
+			<param name="trim">true</param>
+			<param name="minLength">0</param>
+	        <param name="maxLength">20</param>
+			<message>案例风格不能超过20字，请用简洁的语言描述！</message>
+		</field-validator>
+	</field>
+	
+	<field name="example.area">
+		<field-validator type="stringlength">
+			<param name="trim">true</param>
+			<param name="minLength">0</param>
+	        <param name="maxLength">20</param>
+			<message>拍摄场地不能超过10字！</message>
+		</field-validator>
+	</field>
+</validators>

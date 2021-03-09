@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cn.edu.zjut.po.Employer" table="employer" schema="freeze">
+		<id name="employerId" type="string">
+			<column name="employerID" length="10" />
+			<generator class="assigned" />
+		</id>
+		<property name="account" type="string">
+			<column name="account" length="20" unique="true" />
+		</property>
+		<property name="name" type="string">
+			<column name="name" length="20" />
+		</property>
+		<property name="password" type="string">
+			<column name="password" length="20" />
+		</property>
+		<property name="IDNumber" type="string">
+			<column name="IDNumber" length="18" />
+		</property>
+		<property name="phone" type="string">
+			<column name="phone" length="20" />
+		</property>
+		<property name="email" type="string">
+			<column name="email" length="100" />
+		</property>
+		<property name="sex" type="java.lang.Boolean">
+			<column name="sex" />
+		</property>
+		<property name="region" type="string">
+			<column name="region" length="20" />
+		</property>
+		<property name="wechat" type="string">
+			<column name="wechat" length="20" />
+		</property>
+		<property name="qq" type="string">
+			<column name="qq" length="20" />
+		</property>
+		<property name="profilePhoto" type="string">
+			<column name="profilePhoto" length="255" />
+		</property>
+		<property name="hmpgbkg" type="string">
+			<column name="hmpgbkg" length="255" />
+		</property>
+	
+		<!-- 与关注的photographer的多对多关联（单向） -->
+		<set name="photographer_follow" table="follow">
+			<key column="follower" />
+			<many-to-many column="photographerID" class="cn.edu.zjut.po.Photographer" />
+		</set>
+		<!-- 与needs的一对多关联 -->
+		<set name="needs" inverse="true" lazy="false">
+			<key column="employerID" />
+			<one-to-many class="cn.edu.zjut.po.Needs" />
+		</set>
+		<!-- 与subscribe的一对多关联 -->
+		<set name="subscribe" inverse="true" lazy="false">
+			<key column="subscriber" />
+			<one-to-many class="cn.edu.zjut.po.Subscribe" />
+		</set>
+		<!-- 与order的一对多关联-->
+		<set name="orderrs" inverse="true" cascade="all" lazy="false">
+            <key column="employerID" />
+            <one-to-many class="cn.edu.zjut.po.Orderr" />
+        </set>
+        
+        <!-- 与收藏的example的多对多关联 -->
+		<set name="examples_star" table="star" lazy="false">
+			<key column="collecter" />
+			<many-to-many column="exampleID" class="cn.edu.zjut.po.Example"/>
+		</set>
+       
+	</class>
+</hibernate-mapping>
